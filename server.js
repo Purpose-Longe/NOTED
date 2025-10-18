@@ -1,4 +1,6 @@
 const express = require("express");
+const connectDB = require("./src/config/db");
+connectDB();
 const app = express();
 app.use(express.json());
 app.get("/api/health", (req, res) => {
