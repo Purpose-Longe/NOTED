@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require("express");
 const connectDB = require("./src/config/db");
+const todoRoutes = require('./src/routes/todo.routes');
 
 const app = express();
 app.use(express.json());
@@ -12,6 +13,9 @@ app.get("/api/health", (req, res) => {
 app.get("/api/info", (req, res) => {
   res.send("Welcome to NOTED API");
 });
+
+app.use("/api/todos", todoRoutes);
+
 
 const PORT = process.env.PORT || 3000;
 
