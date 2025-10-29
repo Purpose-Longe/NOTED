@@ -19,4 +19,42 @@ const createTodo = async (req, res) => {
     }
     };
 
-module.exports ={createTodo};
+const getTodos = async (req, res) =>{
+    try{
+        const { status } = req.query;
+        let filter = {};
+
+        const allowedStatuses = ["pending", "in-progress", "completed"];
+
+        if(status){
+            const normalizedStatus = status.toLowerCase();
+
+            if(!allowedStatuses.includes(normalizedStatus)){
+                return res.status(400).json({
+                    success:false,
+                    message:`Invalid status value. Allowed values are: ${allowedStatuses.join(', ')}`
+                });
+
+            }
+
+            filter.status = normalizedStatus;
+        }
+
+        const todos = await Todo.find(filter);
+
+        res.status(200).json({
+            success:true,
+            count:todos.length,
+            data:todos,
+        });
+    }catch(error){
+        res.status(500).json({
+            success:false,
+            message:'Failed to fetch todos',
+            error: error.message,
+        });
+    }
+};
+
+
+module.exports ={createTodo,getTodos};
