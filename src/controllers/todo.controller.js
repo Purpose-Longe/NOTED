@@ -138,7 +138,7 @@ const updateTodo = async (req,res) => {
         if (!allowedStatuses.includes(normalizedStatus)){
             return res.status(400).json({
                 success:false,
-                message:`Invalid status value. Allowed value: ${allowedStatuses.join(",")}`
+                message:`Invalid status value. Allowed values: ${allowedStatuses.join(",")}`
             });
         }
         updates.status = normalizedStatus;
